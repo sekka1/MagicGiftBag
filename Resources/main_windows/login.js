@@ -1,6 +1,8 @@
 var win = Titanium.UI.currentWindow;
 win.setBackgroundImage('../images/templates/multi-color/MGB-AppSplash.png');
 
+Ti.API.info( "availableMemory: " + Titanium.Platform.availableMemory );
+
 // Pin orientation
 win.orientationModes = [Titanium.UI.PORTRAIT];
 
@@ -17,7 +19,7 @@ var nav_bar = Titanium.UI.createImageView({
 	    borderWidth: 0,
 	    borderRadius: 0
 });
-win.add(nav_bar);
+//win.add(nav_bar);
 
 var titlebar_logo = Titanium.UI.createLabel({
         //image:'../images/wedvite_logo.png',
@@ -39,33 +41,26 @@ var titlebar_logo = Titanium.UI.createLabel({
 // After Login Buttons
 ////////////////////////////////////////////
 
-
-var windowFriendsList = Titanium.UI.createWindow({
-	title:'Friends List',
-	url:'friendsList.js'
-});
-
+// Search for a gift Button
 var btnFriendsList = Titanium.UI.createButton({  
-	title:'Look for a Gift',  
-	top:30,  
-	left:150,
-	width:150,  
-	height:40,
+	backgroundImage:'../images/templates/multi-color/MGB-AppSearchButton.png',
+    backgroundSelectedImage: '../images/templates/multi-color/MGB-AppSearchButtonPressed.png',  
+	bottom:20,  
+	left:75,
+	width:176,  
+	height:64,
 	borderRadius:1,  
 	font:{fontFamily:'Arial',fontWeight:'bold',fontSize:14}  
 });
 
 btnFriendsList.addEventListener('click', function(){
 
-	windowFriendsList.site_url = win.site_url;
-	windowFriendsList.loader = win.loader;
-	windowFriendsList.backWindow = win;
-	windowFriendsList.open();
+	//windowFriendsList.site_url = win.site_url;
+	//windowFriendsList.loader = win.loader;
+	//windowFriendsList.backWindow = win;
+	win.windowFriendsList.open();
 	win.hide();
-	
 });
-
-//var a = Titanium.UI.createAnimation();
 
 ////////////////////////////////////////////
 // After Login Buttons End
@@ -97,7 +92,7 @@ Titanium.Facebook.addEventListener('logout', function(e) {
     Titanium.API.log("User logged out.");
 });
 
-win.add(Titanium.Facebook.createLoginButton({ top: 325, 'style': 'wide' }));
+win.add(Titanium.Facebook.createLoginButton({ top: 335, 'style': 'wide' }));
 
 ////////////////////////////////////////////
 // Facebook login button End

@@ -1,6 +1,9 @@
 var win = Titanium.UI.currentWindow;  
 win.setBackgroundImage('../images/templates/multi-color/MGB-AppBGWatermark.png');
 
+Ti.API.info( "availableMemory: " + Titanium.Platform.availableMemory );
+
+
 var nav_bar = Titanium.UI.createImageView({
         image:'../images/templates/multi-color/nav-bar-blank.png',
         top:0,
@@ -53,12 +56,6 @@ var tableview = Titanium.UI.createTableView({
 
 Ti.API.info( 'fbID: ' + win.fbID );
 
-var windowAmazonSearchResults = Titanium.UI.createWindow({
-	title:'Search Results',
-	url:'searchResults.js'
-});
-
-
 ///////////////////////////////////////////////
 // Query the Gift Engine for Top Interest
 ///////////////////////////////////////////////
@@ -106,13 +103,13 @@ xhr.send();
 /////////////////////////////////////////////////
 tableview.addEventListener('click', function(e){
 
-	windowAmazonSearchResults.site_url = win.site_url;
-	windowAmazonSearchResults.queryItem =  e.row.name; // The item search term
-	windowAmazonSearchResults.loader = win.loader;
-	windowAmazonSearchResults.backWindow = win;
-	windowAmazonSearchResults.open();
+	//windowAmazonSearchResults.site_url = win.site_url;
+	win.windowAmazonSearchResults.queryItem =  e.row.name; // The item search term
+	//windowAmazonSearchResults.loader = win.loader;
+	//windowAmazonSearchResults.backWindow = win;
+	win.windowAmazonSearchResults.open();
 	win.hide();
-	
+
 });
 
 win.add(tableview);

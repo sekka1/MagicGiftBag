@@ -2,6 +2,8 @@ var win = Titanium.UI.currentWindow;
 
 Ti.include( '../lib/amazon.js' );
 
+Ti.API.info( "availableMemory: " + Titanium.Platform.availableMemory );
+
 var nav_bar = Titanium.UI.createImageView({
         image:'../images/templates/multi-color/nav-bar-blank.png',
         top:0,
@@ -29,6 +31,7 @@ win.add(btnBack);
 
 btnBack.addEventListener('click', function()
 {
+	//alert('hi');
    Ti.API.info( "Event info back button pressed..." );
    win.remove(tableview);
    win.backWindow.show();
@@ -44,11 +47,6 @@ var titleName = Titanium.UI.createLabel({
         color:'white'
 }); 
 win.add(titleName);
-
-var windowProductWebView = Titanium.UI.createWindow({
-	title:'Product Webview',
-	url:'productWebview.js'
-});
 
 // create table view
 var tableview = Titanium.UI.createTableView({
@@ -69,7 +67,8 @@ xhr.onload = function() {
 
 	Ti.API.info( 'Length: ' + results.length );
 
-	for (var i=1;i<results.length;i++){
+	//for (var i=1;i<results.length;i++){
+	for (var i=1;i<10;i++){
 		
 		// Display each of the top categories
 		var row = Ti.UI.createTableViewRow({
@@ -130,9 +129,9 @@ tableview.addEventListener('click', function(e){
 
 	Ti.API.info( 'in tableview click event listener: ' + e.row.item_url  );
 	
-	windowProductWebView.DetailPageURL = e.row.item_url;
-	windowProductWebView.backWindow = win;
-	windowProductWebView.open();
+	win.windowProductWebView.DetailPageURL = e.row.item_url;
+	//windowProductWebView.backWindow = win;
+	win.windowProductWebView.open();
 	win.hide();
 	
 });

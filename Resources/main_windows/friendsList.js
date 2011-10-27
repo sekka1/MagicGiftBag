@@ -1,6 +1,8 @@
 var win = Titanium.UI.currentWindow;  
 win.setBackgroundImage('../images/templates/multi-color/MGB-AppBGWatermark.png');
 
+Ti.API.info( "availableMemory: " + Titanium.Platform.availableMemory );
+
 var nav_bar = Titanium.UI.createImageView({
         image:'../images/templates/multi-color/nav-bar-blank.png',
         top:0,
@@ -29,7 +31,7 @@ win.add(btnBack);
 btnBack.addEventListener('click', function()
 {
 	//alert('pressed back button');
-   Ti.API.info( "Event info back button pressed..." );
+   //Ti.API.info( "Event info back button pressed friendsLists..." );
    win.remove(tableview)
    win.backWindow.show();
    win.close();
@@ -44,11 +46,6 @@ var titleName = Titanium.UI.createLabel({
         color:'white'
 }); 
 win.add(titleName);
-
-var windowFriendsTopSearchTerms = Titanium.UI.createWindow({
-	title:'Friends Top Search Terms',
-	url:'friendsTopSearchTerms.js'
-});
 
 // Search bar on top of the table view
 var search = Titanium.UI.createSearchBar({
@@ -75,7 +72,8 @@ Titanium.Facebook.requestWithGraphPath('me/friends', {}, 'GET', function(e) {
         Ti.API.info( '# of fb friends: ' + results.data.length );
  
 
-        for (var i=0;i<results.data.length;i++){
+        //for (var i=0;i<results.data.length;i++){
+        for (var i=0;i<30;i++){
 
         	// The left image doesn not work right now.  It is a titanium bug where it wont
         	// show a remote url in the left image.
@@ -102,12 +100,12 @@ tableview.addEventListener('click', function(e){
 	Ti.API.info( 'in tableview click event listener: ' + e.row.id  );
 	Ti.API.info( "Titanium.Facebook.accessToken: " + Titanium.Facebook.accessToken );
 	
-	windowFriendsTopSearchTerms.site_url = win.site_url;
-	windowFriendsTopSearchTerms.accessToken = Titanium.Facebook.accessToken;
-	windowFriendsTopSearchTerms.loader = win.loader;
-	windowFriendsTopSearchTerms.fbID = e.source.id;
-	windowFriendsTopSearchTerms.backWindow = win;
-	windowFriendsTopSearchTerms.open();
+	//windowFriendsTopSearchTerms.site_url = win.site_url;
+	win.windowFriendsTopSearchTerms.accessToken = Titanium.Facebook.accessToken;
+	//windowFriendsTopSearchTerms.loader = win.loader;
+	win.windowFriendsTopSearchTerms.fbID = e.source.id;
+	//win.windowFriendsTopSearchTerms.backWindow = win;
+	win.windowFriendsTopSearchTerms.open();
 	win.hide();
 	
 });

@@ -1,5 +1,7 @@
 var win = Titanium.UI.currentWindow;  
 
+Ti.API.info( "availableMemory: " + Titanium.Platform.availableMemory );
+
 var nav_bar = Titanium.UI.createImageView({
         image:'../images/templates/multi-color/nav-bar-blank.png',
         top:0,
@@ -28,6 +30,7 @@ win.add(btnBack);
 btnBack.addEventListener('click', function()
 {
    Ti.API.info( "Event info back button pressed..." );
+   win.remove( webview );
    win.backWindow.show();
    win.close();
 });
