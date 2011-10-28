@@ -45,7 +45,7 @@ var titlebar_logo = Titanium.UI.createLabel({
 var btnFriendsList = Titanium.UI.createButton({  
 	backgroundImage:'../images/templates/multi-color/MGB-AppSearchButton.png',
     backgroundSelectedImage: '../images/templates/multi-color/MGB-AppSearchButtonPressed.png',  
-	bottom:20,  
+	bottom:50,  
 	left:75,
 	width:176,  
 	height:64,
@@ -55,10 +55,7 @@ var btnFriendsList = Titanium.UI.createButton({
 
 btnFriendsList.addEventListener('click', function(){
 
-	//windowFriendsList.site_url = win.site_url;
-	//windowFriendsList.loader = win.loader;
-	//windowFriendsList.backWindow = win;
-	win.windowFriendsList.open();
+	win.windowMain.open();
 	win.hide();
 });
 
@@ -92,7 +89,7 @@ Titanium.Facebook.addEventListener('logout', function(e) {
     Titanium.API.log("User logged out.");
 });
 
-win.add(Titanium.Facebook.createLoginButton({ top: 335, 'style': 'wide' }));
+win.add(Titanium.Facebook.createLoginButton({ bottom:2, 'style': 'wide' }));
 
 ////////////////////////////////////////////
 // Facebook login button End
