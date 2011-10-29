@@ -4,8 +4,6 @@
 
 var Login = {
 
-	testCount:0,
-	testDidShow:false,
 	isAddedToWin:false,
 	nav_bar:'',
 	btnBack:'',
@@ -27,11 +25,6 @@ var Login = {
 		this.addEventListeners();
 	},
 	show:function(){
-	
-		///////////////////////////////////////////////
-		this.testCount++; // Debuging.  Counting how many times the tableview click event happens
-		this.testDidShow = false; // setting it so it only clicks one time.  have to fix this
-		////////////////////////////////////////////////
 	
 		win.setBackgroundImage('../images/templates/multi-color/MGB-AppSplash.png');
 	
@@ -59,11 +52,13 @@ var Login = {
 	},
 	hide:function(){
 	
-		win.remove(Titanium.Facebook.createLoginButton({ bottom:2, 'style': 'wide' }));
+		// This dont seem to work calling the remove
+		//win.remove(Titanium.Facebook.createLoginButton({ bottom:2, 'style': 'wide' }));
 
 		if( Titanium.Facebook.loggedIn ){
 		
-			win.hide(this.btnFriendsList);
+			//win.hide(this.btnFriendsList);
+			this.btnFriendsList.hide();
 		}
 	},
 	setFacebookOptions:function(){
@@ -74,23 +69,17 @@ var Login = {
 		
 		//Titanium.Facebook.authorize(); // If this is uncommented the facebook login would automatically pop up
 		Titanium.Facebook.addEventListener('login', function(e) {
-		
-			if( ! Login.testDidShow ){ // Delete me when this problem is figured out!!
-			
-				Login.testDidShow = true;
 				
-				if (e.success) {
-					Ti.API.info( 'Logged In as: ' + Titanium.Facebook.uid );
-					Ti.API.info( '---------------Login tableview.addEventListener---------------' + FriendsList.testCount );
+			if (e.success) {
+				Ti.API.info( 'Logged In as: ' + Titanium.Facebook.uid );
+				Ti.API.info( '---------------Login tableview.addEventListener---------------' + FriendsList.testCount );
 
-					
-					win.add(Login.btnFriendsList);
-					
-				} else if (e.error) {
-					alert(e.error);
-				} else if (e.cancelled) {
-					Ti.API.info( 'Cancelled Facebook Login' );
-				}
+				win.add(Login.btnFriendsList);
+				
+			} else if (e.error) {
+				alert(e.error);
+			} else if (e.cancelled) {
+				Ti.API.info( 'Cancelled Facebook Login' );
 			}
 		});
 		
@@ -103,6 +92,7 @@ var Login = {
 	
 		this.btnFriendsList.addEventListener('click', function(){
 		
+			Login.hide();
 			FriendsList.main();
 			
 		});	
