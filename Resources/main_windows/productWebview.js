@@ -10,12 +10,12 @@ var ProductWebView = {
 		scalesPageToFit:false
 	}),
 	actInd:Titanium.UI.createActivityIndicator({
-			top:10,
-			right:-15,
+			top:5,
+			right:15,
 			height:50,
 			width:10,
 			font:{fontFamily:'Helvetica Neue',fontSize:20,fontWeight:'bold'},
-			color:'black',
+			color:'white',
 			message:'',
 			style:'BIG',
 	}),
