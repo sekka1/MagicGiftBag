@@ -7,17 +7,17 @@ var ProductWebView = {
 	DetailPageURL: '',
 	webview:Titanium.UI.createWebView({
 		top:60,
-		//url:this.DetailPageURL,
 		scalesPageToFit:false
 	}),
 	actInd:Titanium.UI.createActivityIndicator({
-			top:50,
-			right:150,
+			top:10,
+			right:-15,
 			height:50,
 			width:10,
-			font:{fontFamily:'Helvetica Neue', fontSize:20,fontWeight:'bold'},
-			color: 'black',
-			message:'Loading...'
+			font:{fontFamily:'Helvetica Neue',fontSize:20,fontWeight:'bold'},
+			color:'black',
+			message:'Loading...',
+			style:'BIG',
 	}),
 	main:function(){
 		
@@ -26,6 +26,8 @@ var ProductWebView = {
 	},
 	show:function(){
 		
+		// Set Navigation Title
+		NavigationBar.titleName.text = 'Item';
 		NavigationBar.btnBack.action = 'ProductWebView';
 	
 		if( this.isAddedToWin ){
@@ -34,7 +36,7 @@ var ProductWebView = {
 			// Navigation bar
 			NavigationBar.show();
 		
-			this.webview.show();
+			//this.webview.show();
 
 		} else {
 			// This object elements has not been added to the current window.  Add them.
@@ -46,6 +48,10 @@ var ProductWebView = {
 			
 			// Table
 			win.add(this.webview);
+			this.webview.hide();
+			
+			// Activity Indicator
+			win.add( this.actInd );
 		}
 		
 		this.webview.addEventListener("beforeload", function(e){
@@ -54,9 +60,13 @@ var ProductWebView = {
 		
 		this.webview.addEventListener("load", function(e){
 			ProductWebView.actInd.hide();
+			ProductWebView.webview.show();
 		});
 	},
 	hide:function(){
+	
+		//this.DetailPageURL = 'http://www.google.com';
+		//this.webview.reload();
 	
 		this.actInd.hide();
 		this.webview.hide();

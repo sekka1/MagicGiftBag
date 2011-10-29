@@ -17,6 +17,16 @@ var FriendsList = {
 			search:this.search,
 			filterAttribute:'title'
 	}),
+	actInd:Titanium.UI.createActivityIndicator({
+			top:5,
+			right:20,
+			height:50,
+			width:10,
+			font:{fontFamily:'Helvetica Neue',fontSize:20,fontWeight:'bold'},
+			color:'white',
+			message:'',
+			style:'BIG',
+	}),
 	main:function(){
 		
 		this.getData();
@@ -49,7 +59,12 @@ var FriendsList = {
 			
 			// Table
 			win.add(this.tableview);
+			
+			// Activity Indicator
+			win.add( this.actInd );
 		}
+		
+		this.actInd.show();
 	},
 	hide:function(){
 	
@@ -65,6 +80,8 @@ var FriendsList = {
 				Ti.API.info( '---Loading New friends list----' );
 		
 				FriendsList.fillRows( e.result );
+				
+				FriendsList.actInd.hide();
 		
 			} else if (e.error) {
 				alert(e.error);

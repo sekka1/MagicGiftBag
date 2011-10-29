@@ -14,6 +14,16 @@ var FriendsTopSearchList = {
 				top:60,
 				opacity:0.4
 	}),
+	actInd:Titanium.UI.createActivityIndicator({
+			top:5,
+			right:20,
+			height:50,
+			width:10,
+			font:{fontFamily:'Helvetica Neue',fontSize:20,fontWeight:'bold'},
+			color:'white',
+			message:'',
+			style:'BIG',
+	}),
 	main:function(){
 	
 		this.getData();
@@ -30,6 +40,8 @@ var FriendsTopSearchList = {
 		
 		win.setBackgroundImage('../images/templates/multi-color/MGB-AppBGWatermark.png');
 
+		// Set Navigation Items
+		NavigationBar.titleName.text = 'Interests';
 		NavigationBar.btnBack.action = 'FriendsTopSearchList';
 
 		if( this.isAddedToWin ){
@@ -50,7 +62,12 @@ var FriendsTopSearchList = {
 			
 			// Table
 			win.add(this.tableview);
+			
+			// Activity Indicator
+			win.add( this.actInd );
 		}
+		
+		this.actInd.show();
 	},
 	hide:function(){
 
@@ -70,6 +87,8 @@ var FriendsTopSearchList = {
 			Ti.API.info( 'in onload: ' );
 						
 			FriendsTopSearchList.fillRows( this.responseText );
+			
+			FriendsTopSearchList.actInd.hide();
 		};
 		
 		// Sending accessToken to the web server to get this user's facebook info to recommend something

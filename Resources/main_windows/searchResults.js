@@ -11,6 +11,16 @@ var SearchResults = {
 	tableview: Titanium.UI.createTableView({
 			top:60
 	}),
+	actInd:Titanium.UI.createActivityIndicator({
+			top:5,
+			right:15,
+			height:50,
+			width:10,
+			font:{fontFamily:'Helvetica Neue',fontSize:20,fontWeight:'bold'},
+			color:'white',
+			message:'',
+			style:'BIG',
+	}),
 	main:function(){
 	
 		this.getData();
@@ -22,7 +32,9 @@ var SearchResults = {
 		this.testCount++; // Debuging.  Counting how many times the tableview click event happens
 		this.testDidShow = false; // setting it so it only clicks one time.  have to fix this
 		////////////////////////////////////////////////
-
+		
+		// Set Navigation Items
+		NavigationBar.titleName.text = 'Products';
 		NavigationBar.btnBack.action = 'SearchResults';
 	
 		if( this.isAddedToWin ){
@@ -43,7 +55,12 @@ var SearchResults = {
 			
 			// Table
 			win.add(this.tableview);
+			
+			// Activity Indicator
+			win.add( this.actInd );
 		}
+		
+		this.actInd.show();
 	},
 	hide:function(){
 	
@@ -55,6 +72,8 @@ var SearchResults = {
 		this.xhr.onload = function() {
 	
 			SearchResults.fillRows( this.responseText );
+			
+			SearchResults.actInd.hide();
 		};
 		
 		/////////////////////////////////////////////////
