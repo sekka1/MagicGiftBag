@@ -35,7 +35,7 @@ var Login = {
 	
 			if( Titanium.Facebook.loggedIn ){
 			
-				win.show(this.btnFriendsList);
+				this.btnFriendsList.show();
 			}
 		} else {
 			// This object elements has not been added to the current window.  Add them.
@@ -53,7 +53,7 @@ var Login = {
 	hide:function(){
 	
 		// This dont seem to work calling the remove
-		//win.remove(Titanium.Facebook.createLoginButton({ bottom:2, 'style': 'wide' }));
+		//Titanium.Facebook.createLoginButton.hide();
 
 		if( Titanium.Facebook.loggedIn ){
 		
@@ -74,7 +74,8 @@ var Login = {
 				Ti.API.info( 'Logged In as: ' + Titanium.Facebook.uid );
 				Ti.API.info( '---------------Login tableview.addEventListener---------------' + FriendsList.testCount );
 
-				win.add(Login.btnFriendsList);
+				//win.add(Login.btnFriendsList);
+				Login.show();
 				
 			} else if (e.error) {
 				alert(e.error);
@@ -85,6 +86,8 @@ var Login = {
 		
 		Titanium.Facebook.addEventListener('logout', function(e) {
 			Titanium.API.log("User logged out.");
+			
+			Login.btnFriendsList.hide();
 		});
 		
 	},

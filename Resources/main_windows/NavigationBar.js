@@ -29,7 +29,7 @@ var NavigationBar = {
 			text:'',  
 			top:10,  
 			left:125,
-			font:{fontFamily:'Helvetica Neue',fontSize:20,fontWeight:'bold'},
+			font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},
 			borderRadius:0,  
 			height:'auto',
 			color:'white'
