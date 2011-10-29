@@ -16,7 +16,7 @@ var ProductWebView = {
 			width:10,
 			font:{fontFamily:'Helvetica Neue',fontSize:20,fontWeight:'bold'},
 			color:'black',
-			message:'Loading...',
+			message:'',
 			style:'BIG',
 	}),
 	main:function(){
