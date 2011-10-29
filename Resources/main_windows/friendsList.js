@@ -7,6 +7,7 @@ var FriendsList = {
 	testDidShow:false,
 	isAddedToWin:false,
 	didSetFriendsList:false,
+	tableViewCurrentSelectedRow:-1,
 	friendsList:'', // FB json return
 	search: search = Titanium.UI.createSearchBar({
 			showCancel:true,
@@ -70,6 +71,9 @@ var FriendsList = {
 		
 		if( ! FriendsList.didSetFriendsList )
 			this.actInd.show();
+			
+		if( this.tableViewCurrentSelectedRow != -1 )
+			this.tableview.scrollToIndex( this.tableViewCurrentSelectedRow );
 	},
 	hide:function(){
 	
@@ -82,6 +86,7 @@ var FriendsList = {
 	
 		this.didSetFriendsList = false;
 		this.friendsList = '';
+		this.tableViewCurrentSelectedRow = -1;
 	},
 	getData:function(){
 
@@ -134,6 +139,7 @@ var FriendsList = {
 			});
 						
 			row.id = results.data[i].id;
+			row.number = i;
 			row.btnBack = this.btnBack;
 
 			this.tableview.appendRow( row );
@@ -148,6 +154,10 @@ var FriendsList = {
 				Ti.API.info( '---------------FriendsList tableview.addEventListener---------------' + FriendsList.testCount );
 				Ti.API.info( 'in tableview click event listener: ' + e.row.id  );
 				Ti.API.info( "Titanium.Facebook.accessToken: " + Titanium.Facebook.accessToken );
+				Ti.API.info( 'tableview.index: ' + e.row.number );
+				
+				// Set row number so it automatically goes back to this spot when user goes back
+				FriendsList.tableViewCurrentSelectedRow = e.row.number;
 				
 				FriendsList.hide();
 				
