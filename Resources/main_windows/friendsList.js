@@ -5,7 +5,9 @@ var FriendsList = {
 
 	testCount:0,
 	testDidShow:false,
-	isAddedToWin:false,	
+	isAddedToWin:false,
+	didSetFriendsList:false,
+	friendsList:'', // FB json return
 	search: search = Titanium.UI.createSearchBar({
 			showCancel:true,
 			opacity:1.0,
@@ -66,31 +68,53 @@ var FriendsList = {
 			win.add( this.actInd );
 		}
 		
-		this.actInd.show();
+		if( ! FriendsList.didSetFriendsList )
+			this.actInd.show();
 	},
 	hide:function(){
 	
 		NavigationBar.hide();
 		this.tableview.setData([]);
+		this.actInd.hide();
 		this.tableview.hide();
+	},
+	clearFriendsList:function(){
+	
+		this.didSetFriendsList = false;
+		this.friendsList = '';
 	},
 	getData:function(){
 
-		Titanium.Facebook.requestWithGraphPath('me/friends', {}, 'GET', function(e) {
-			if (e.success) {
-				//Ti.API.info(e.result);
-				Ti.API.info( '---Loading New friends list----' );
+		if( ! FriendsList.didSetFriendsList ){
+
+			Titanium.Facebook.requestWithGraphPath('me/friends', {}, 'GET', function(e) {
+				if (e.success) {
+					//Ti.API.info(e.result);
+					Ti.API.info( '---Loading New friends list----' );
+			
+					// Save friends list
+					FriendsList.friendsList = e.result;
+					
+					FriendsList.didSetFriendsList = true;
+			
+					FriendsList.fillRows( FriendsList.friendsList );
+					
+					FriendsList.actInd.hide();
+			
+				} else if (e.error) {
+					alert(e.error);
+				} else {
+					alert('Unknown response');
+				}
+			});
+		} else {
 		
-				FriendsList.fillRows( e.result );
-				
-				FriendsList.actInd.hide();
+			Ti.API.info( '---Loading Saved friends list----' );
 		
-			} else if (e.error) {
-				alert(e.error);
-			} else {
-				alert('Unknown response');
-			}
-		});
+			this.fillRows( FriendsList.friendsList );
+			
+			this.actInd.hide();
+		}
 	},
 	fillRows:function( result ){
 

@@ -65,6 +65,7 @@ var SearchResults = {
 	hide:function(){
 	
 		this.tableview.setData([]);
+		this.actInd.hide();
 		this.tableview.hide();
 	},
 	getData:function(){

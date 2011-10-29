@@ -76,8 +76,8 @@ var Login = {
 				Ti.API.info( 'Logged In as: ' + Titanium.Facebook.uid );
 				Ti.API.info( '---------------Login tableview.addEventListener---------------' + FriendsList.testCount );
 
-				//win.add(Login.btnFriendsList);
-				Login.show();
+				win.add(Login.btnFriendsList);
+				//Login.show();
 				
 			} else if (e.error) {
 				alert(e.error);
@@ -90,6 +90,9 @@ var Login = {
 			Titanium.API.log("User logged out.");
 			
 			Login.btnFriendsList.hide();
+			
+			// Clear friends list
+			FriendsList.clearFriendsList();
 		});
 		
 	},

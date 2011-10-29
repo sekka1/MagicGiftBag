@@ -73,6 +73,7 @@ var FriendsTopSearchList = {
 
 		this.tableview.setData([]);
 		NavigationBar.hide();
+		this.actInd.hide();
 		this.tableview.hide();
 	},
 	getData:function(){
