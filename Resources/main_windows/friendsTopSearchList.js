@@ -4,29 +4,63 @@
 
 var FriendsTopSearchList = {
 
-	firstRun:true,
-	btnBack: btnBack,
+	testCount:0,
+	testDidShow:false,
+	isAddedToWin:false,	
 	fbID: '',
 	accessToken: '',
-	topSearchList: '',
 	xhr:Titanium.Network.createHTTPClient(),
 	tableview:Titanium.UI.createTableView({
 				top:60,
 				opacity:0.4
 	}),
 	main:function(){
+	
+		this.getData();
+		this.show();
+	},
+	show:function(){
+	
+		///////////////////////////////////////////////
+		this.testCount++; // Debuging.  Counting how many times the tableview click event happens
+		this.testDidShow = false; // setting it so it only clicks one time.  have to fix this
+		////////////////////////////////////////////////
+	
+		Ti.API.info( 'fbID: ' + this.fbID );
+		
+		win.setBackgroundImage('../images/templates/multi-color/MGB-AppBGWatermark.png');
 
-			Ti.API.info( 'no topSearchList data: ' );
-			this.getData();
-			this.display();
+		NavigationBar.btnBack.action = 'FriendsTopSearchList';
 
+		if( this.isAddedToWin ){
+			// This objects element has already been added to the window.  You can just show it
+		
+			// Navigation bar
+			NavigationBar.show();
+		
+			this.tableview.show();
+
+		} else {
+			// This object elements has not been added to the current window.  Add them.
+		
+			this.isAddedToWin = true;
+			
+			// Navigation bar
+			NavigationBar.show();
+			
+			// Table
+			win.add(this.tableview);
+		}
+	},
+	hide:function(){
+
+		this.tableview.setData([]);
+		NavigationBar.hide();
+		this.tableview.hide();
 	},
 	getData:function(){
 	
 		Ti.API.info( 'getData' );
-		
-		var topSearchList = this.topSearchList;
-		//var display = this.display();
 		
 		///////////////////////////////////////////////
 		// Query the Gift Engine for Top Interest
@@ -70,29 +104,17 @@ var FriendsTopSearchList = {
 		/////////////////////////////////////////////////
 		this.tableview.addEventListener('click', function(e){
 		
-			SearchResults.queryItem = e.row.name;
-			SearchResults.display();
-		
+			if( ! FriendsTopSearchList.testDidShow ){ // Delete me when this problem is figured out!!
+			
+				FriendsTopSearchList.testDidShow = true;
+				
+				Ti.API.info( '---------------------FriendsTopSearchList tableview click---------');
+				
+				FriendsTopSearchList.hide();
+				
+				SearchResults.queryItem = e.row.name;
+				SearchResults.main();		
+			}
 		});
-	},
-	display:function(){
-		Ti.API.info( 'display' );
-	
-		var tableview = this.tableview;
-	
-		Ti.API.info( 'fbID: ' + this.fbID );
-
-		win.add(this.tableview);
-	
-		// Set the back button action
-		this.btnBack.action = 'FriendsTopSearchList';
-
-	},
-	
-	cleanup: function(){
-		Ti.API.info( 'Cleaning up: friendsTopSearchList' );
-		this.tableview.setData([]);
-		this.topSearchList = '';
-		win.remove( this.tableview );
 	}
 };

@@ -12,16 +12,17 @@ var site_url = 'http://www.magicgiftbag.com/';
 /////////////////////////////////////////////
 // Creating All Windows
 /////////////////////////////////////////////
-var windowLogin = Titanium.UI.createWindow({
+/*var windowLogin = Titanium.UI.createWindow({
     title:'User Login',
     url:'main_windows/login.js',
     exitOnClose: true
 });
-
+*/
 
 var windowMain = Titanium.UI.createWindow({
 	title:'Main',
-	url:'main_windows/main.js'
+	url:'main_windows/main.js',
+	exitOnClose: true
 });
 
 /////////////////////////////////////////////
@@ -36,11 +37,11 @@ var loader = Titanium.Network.createHTTPClient();
 /////////////////////////////////////////////
 
 // Login Window
-windowLogin.site_url = site_url;
-windowLogin.loader = loader;
-windowLogin.windowMain = windowMain;
+//windowLogin.site_url = site_url;
+//windowLogin.loader = loader;
+//windowLogin.windowMain = windowMain;
 
-windowMain.backWindow = windowLogin;
+//windowMain.backWindow = windowLogin;
 windowMain.site_url = site_url;
 windowMain.loader = loader;
 
@@ -48,4 +49,4 @@ windowMain.loader = loader;
 /////////////////////////////////////////////
 // Open First Window
 /////////////////////////////////////////////
-windowLogin.open();
+windowMain.open();

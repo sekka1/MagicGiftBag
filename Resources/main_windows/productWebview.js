@@ -2,9 +2,8 @@
 // Display the Product in a webview
 /////////////////////////////////////////////////
 
-var ProductWebView={
-	
-	btnBack: '',
+var ProductWebView = {
+
 	DetailPageURL: '',
 	webview:Titanium.UI.createWebView({
 		top:60,
@@ -20,29 +19,46 @@ var ProductWebView={
 			color: 'black',
 			message:'Loading...'
 	}),
-
-	display: function(){
-	
+	main:function(){
+		
 		this.webview.url = this.DetailPageURL;
+		this.show();
+	},
+	show:function(){
+		
+		NavigationBar.btnBack.action = 'ProductWebView';
+	
+		if( this.isAddedToWin ){
+			// This objects element has already been added to the window.  You can just show it
+		
+			// Navigation bar
+			NavigationBar.show();
+		
+			this.webview.show();
 
+		} else {
+			// This object elements has not been added to the current window.  Add them.
+		
+			this.isAddedToWin = true;
+			
+			// Navigation bar
+			NavigationBar.show();
+			
+			// Table
+			win.add(this.webview);
+		}
+		
 		this.webview.addEventListener("beforeload", function(e){
-			this.actInd.show();
+			ProductWebView.actInd.show();
 		});
 		
 		this.webview.addEventListener("load", function(e){
-			this.actInd.hide();
+			ProductWebView.actInd.hide();
 		});
-		
-		win.add( this.webview );
-		win.add( this.actInd );
-		
-		btnBack.action = 'ProductWebView';
-		btnBack.webview = webview;
-		btnBack.btnBack = btnBack;
-	
 	},
-	cleanup:function(){
-		win.remove( this.actInd );
-		win.remove( this.webview );
+	hide:function(){
+	
+		this.actInd.hide();
+		this.webview.hide();
 	}
 }

@@ -3,9 +3,9 @@
 /////////////////////////////////////////////////
 var FriendsList = {
 
-	firstRun:true,
-	btnBack:btnBack,
-	
+	testCount:0,
+	testDidShow:false,
+	isAddedToWin:false,	
 	search: search = Titanium.UI.createSearchBar({
 			showCancel:true,
 			opacity:1.0,
@@ -18,15 +18,51 @@ var FriendsList = {
 			filterAttribute:'title'
 	}),
 	main:function(){
+		
 		this.getData();
-		this.display();
+		this.show();
+	},
+	show:function(){
 	
+		///////////////////////////////////////////////
+		this.testCount++; // Debuging.  Counting how many times the tableview click event happens
+		this.testDidShow = false; // setting it so it only clicks one time.  have to fix this
+		////////////////////////////////////////////////
+	
+		NavigationBar.btnBack.action = 'FriendsList';
+	
+		if( this.isAddedToWin ){
+			// This objects element has already been added to the window.  You can just show it
+		
+			// Navigation bar
+			NavigationBar.show();
+		
+			this.tableview.show();
+
+		} else {
+			// This object elements has not been added to the current window.  Add them.
+		
+			this.isAddedToWin = true;
+			
+			// Navigation bar
+			NavigationBar.show();
+			
+			// Table
+			win.add(this.tableview);
+		}
+	},
+	hide:function(){
+	
+		NavigationBar.hide();
+		this.tableview.setData([]);
+		this.tableview.hide();
 	},
 	getData:function(){
 
 		Titanium.Facebook.requestWithGraphPath('me/friends', {}, 'GET', function(e) {
 			if (e.success) {
 				//Ti.API.info(e.result);
+				Ti.API.info( '---Loading New friends list----' );
 		
 				FriendsList.fillRows( e.result );
 		
@@ -62,35 +98,21 @@ var FriendsList = {
 		
 		this.tableview.addEventListener('click', function(e){
 		
-			Ti.API.info( '---------------FriendsList tableview.addEventListener-------------------------' );
-			Ti.API.info( 'in tableview click event listener: ' + e.row.id  );
-			Ti.API.info( "Titanium.Facebook.accessToken: " + Titanium.Facebook.accessToken );
+			if( ! FriendsList.testDidShow ){ // Delete me when this problem is figured out!!
 			
-			this.hide();
+				FriendsList.testDidShow = true;
 			
-			FriendsTopSearchList.fbID = e.row.id;
-			FriendsTopSearchList.accessToken = Titanium.Facebook.accessToken;
-			FriendsTopSearchList.main();
+				Ti.API.info( '---------------FriendsList tableview.addEventListener---------------' + FriendsList.testCount );
+				Ti.API.info( 'in tableview click event listener: ' + e.row.id  );
+				Ti.API.info( "Titanium.Facebook.accessToken: " + Titanium.Facebook.accessToken );
+				
+				FriendsList.hide();
+				
+				FriendsTopSearchList.fbID = e.row.id;
+				FriendsTopSearchList.accessToken = Titanium.Facebook.accessToken;
+				FriendsTopSearchList.main();				
+			}			
 		});
 	
-	},
-	display:function(){
-
-		// Adding stuff to the window but only want to add it once then the show/hide game afterwards
-		if( this.firstRun ){
-			Ti.API.info( 'FriendsList first run' );
-			win.add(this.tableview);
-			this.firstRun = false;
-		} else {
-			Ti.API.info( 'FriendsList NOT first run' );
-			this.tableview.show();
-		}
-	
-		// Set the back button action
-		this.btnBack.action = 'FriendsList';
-
-	},
-	cleanup: function(){
-		win.hide( this.tableview );
 	}
 };
