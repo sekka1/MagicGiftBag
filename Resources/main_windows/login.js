@@ -18,6 +18,7 @@ var Login = {
 		borderRadius:1,  
 		font:{fontFamily:'Arial',fontWeight:'bold',fontSize:14}  
 	}),
+	facebookLogInButton:Titanium.Facebook.createLoginButton({ bottom:2, 'style': 'wide' }),
 	main:function(){
 	
 		this.setFacebookOptions();
@@ -30,8 +31,9 @@ var Login = {
 	
 		if( this.isAddedToWin ){
 			// This objects element has already been added to the window.  You can just show it
-		
-			win.add(Titanium.Facebook.createLoginButton({ bottom:2, 'style': 'wide' }));
+
+			// Add the Facebook Login/Logout button to the page		
+			win.add( this.facebookLogInButton );
 	
 			if( Titanium.Facebook.loggedIn ){
 			
@@ -51,9 +53,9 @@ var Login = {
 		}
 	},
 	hide:function(){
-	
-		// This dont seem to work calling the remove
-		//Titanium.Facebook.createLoginButton.hide();
+
+		// Remove Facebook login button	
+		this.facebookLogInButton.hide();
 
 		if( Titanium.Facebook.loggedIn ){
 		
