@@ -38,7 +38,9 @@ var FriendsList = {
 		this.testCount++; // Debuging.  Counting how many times the tableview click event happens
 		this.testDidShow = false; // setting it so it only clicks one time.  have to fix this
 		////////////////////////////////////////////////
-	
+
+		// Set Navigation Items
+		NavigationBar.titleName.text = 'Friends';
 		NavigationBar.btnBack.action = 'FriendsList';
 	
 		if( this.isAddedToWin ){

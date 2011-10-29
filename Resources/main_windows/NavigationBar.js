@@ -26,9 +26,10 @@ var NavigationBar = {
 		font:{fontFamily:'Arial',fontWeight:'bold',fontSize:14}  
 	}),
 	titleName:Titanium.UI.createLabel({  
-			text:'Facebook Friends',  
+			text:'',  
 			top:10,  
-			left:125,  
+			left:125,
+			font:{fontFamily:'Helvetica Neue',fontSize:20,fontWeight:'bold'},
 			borderRadius:0,  
 			height:'auto',
 			color:'white'
