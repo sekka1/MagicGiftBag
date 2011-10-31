@@ -71,9 +71,6 @@ var FriendsList = {
 		
 		if( ! FriendsList.didSetFriendsList )
 			this.actInd.show();
-			
-		if( this.tableViewCurrentSelectedRow != -1 )
-			this.tableview.scrollToIndex( this.tableViewCurrentSelectedRow );
 	},
 	hide:function(){
 	
@@ -100,11 +97,19 @@ var FriendsList = {
 					// Save friends list
 					FriendsList.friendsList = e.result;
 					
-					FriendsList.didSetFriendsList = true;
+					// FIX - Turning this off for now.  It is not the fetch of the friends that
+					// is making it slow.  It is the loading all these items into the tableview
+					// But we can keep this here for a good example of how to keep the data for
+					// the other views
+					//FriendsList.didSetFriendsList = true;
 			
 					FriendsList.fillRows( FriendsList.friendsList );
 					
 					FriendsList.actInd.hide();
+					
+					// Scroll to previous position in the friends list
+					if( FriendsList.tableViewCurrentSelectedRow != -1 )
+						FriendsList.tableview.scrollToIndex( FriendsList.tableViewCurrentSelectedRow );
 			
 				} else if (e.error) {
 					alert(e.error);
