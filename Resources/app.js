@@ -12,7 +12,7 @@ var site_url = 'http://www.magicgiftbag.com/';
 // Creating All Windows
 /////////////////////////////////////////////
 var windowMain = Titanium.UI.createWindow({
-	title:'Main',
+	//title:'Main',
 	url:'main_windows/main.js',
 	exitOnClose: true
 });
