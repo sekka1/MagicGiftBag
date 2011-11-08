@@ -14,6 +14,12 @@ var FriendsTopSearchList = {
 				top:60,
 				opacity:0.4
 	}),
+	blankImage:Titanium.UI.createImageView({ // To cover the logout button
+				image:'../images/templates/multi-color/blank_white.png',
+				width:Ti.Platform.displayCaps.platformWidth * 0.31,
+				height:Ti.Platform.displayCaps.platformHeight * 0.09,
+				bottom:5
+	}),
 	actInd:Titanium.UI.createActivityIndicator({
 			top:5,
 			right:20,
@@ -49,6 +55,8 @@ var FriendsTopSearchList = {
 		
 			// Navigation bar
 			NavigationBar.show();
+			
+			this.blankImage.show();
 		
 			this.tableview.show();
 
@@ -59,6 +67,10 @@ var FriendsTopSearchList = {
 			
 			// Navigation bar
 			NavigationBar.show();
+			
+			// This is to cover up the facebook logout button on subsequent pages
+			// I was unable to remove it from the window
+			win.add( this.blankImage );
 			
 			// Table
 			win.add(this.tableview);
@@ -75,6 +87,7 @@ var FriendsTopSearchList = {
 		NavigationBar.hide();
 		this.actInd.hide();
 		this.tableview.hide();
+		this.blankImage.hide();
 	},
 	getData:function(){
 	

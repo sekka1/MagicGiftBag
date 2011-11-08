@@ -33,3 +33,4 @@ var screenW = Ti.Platform.displayCaps.platformWidth;
 var screenH = Ti.Platform.displayCaps.platformHeight;
  
 Ti.API.info('Width ' + screenW + ' Height ' + screenH);
+Ti.API.info( 'Platform: ' + Titanium.Platform.name );

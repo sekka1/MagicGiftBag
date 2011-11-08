@@ -11,14 +11,26 @@ var Login = {
 	btnFriendsList:Titanium.UI.createButton({  
 		backgroundImage:'../images/templates/multi-color/MGB-AppSearchButton.png',
 		backgroundSelectedImage: '../images/templates/multi-color/MGB-AppSearchButtonPressed.png',  
-		//bottom:50,
 		bottom:Ti.Platform.displayCaps.platformHeight * 0.1,
-		//left:75,
 		left:Ti.Platform.displayCaps.platformWidth * 0.25,
 		width:176,  
 		height:64,
 		borderRadius:1,  
 		font:{fontFamily:'Arial',fontWeight:'bold',fontSize:14}  
+	}),
+	blankImage:Titanium.UI.createImageView({
+				image:'../images/templates/multi-color/blank_white.png',
+				width:Ti.Platform.displayCaps.platformWidth * 0.31,
+				height:Ti.Platform.displayCaps.platformHeight * 0.09,
+				bottom:5
+	}),
+	// This is for the android.  For some reason the android on wont do the win.setBackground
+	backgroundImage:Titanium.UI.createImageView({
+				image:'../images/templates/multi-color/MGB-AppSplash.png',
+				width:Ti.Platform.displayCaps.platformWidth,
+				height:Ti.Platform.displayCaps.platformHeight,
+				canScale:false,
+				top:0
 	}),
 	facebookLogInButton:Titanium.Facebook.createLoginButton({ bottom:2, 'style': 'wide' }),
 	main:function(){
@@ -36,17 +48,22 @@ var Login = {
 		if( this.isAddedToWin ){
 			// This objects element has already been added to the window.  You can just show it
 
+			if( Titanium.Platform.name == 'android' )
+				this.backgroundImage.show();
+
 			// Add the Facebook Login/Logout button to the page		
 			win.add( this.facebookLogInButton );
 	
-			if( Titanium.Facebook.loggedIn ){
-			
+			if( Titanium.Facebook.loggedIn )
 				this.btnFriendsList.show();
-			}
+			
 		} else {
 			// This object elements has not been added to the current window.  Add them.
 			
 			this.isAddedToWin = true;
+			
+			if( Titanium.Platform.name == 'android' )
+				win.add( this.backgroundImage );
 		
 			win.add(Titanium.Facebook.createLoginButton({ bottom:2, 'style': 'wide' }));
 	
@@ -66,6 +83,8 @@ var Login = {
 			//win.hide(this.btnFriendsList);
 			this.btnFriendsList.hide();
 		}
+		
+		this.backgroundImage.hide();
 	},
 	setFacebookOptions:function(){
 		
@@ -79,10 +98,12 @@ var Login = {
 			if (e.success) {
 				Ti.API.info( 'Logged In as: ' + Titanium.Facebook.uid );
 				Ti.API.info( '---------------Login tableview.addEventListener---------------' + FriendsList.testCount );
-
-				win.add(Login.btnFriendsList);
-				//Login.show();
 				
+				Login.btnFriendsList.show();
+				
+				if( ! this.isAddedToWin )
+					win.add(Login.btnFriendsList);
+
 			} else if (e.error) {
 				alert(e.error);
 			} else if (e.cancelled) {
