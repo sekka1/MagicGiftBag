@@ -129,7 +129,7 @@ var SearchResults = {
 			row.add(rowImage);
 			
 			var rowPrice = Ti.UI.createLabel({
-				text:'Price: ' + results[i].price,
+				text:results[i].price,
 				font:{fontSize:15},
 				color:'black',
 				left:Ti.Platform.displayCaps.platformWidth * 0.3,

@@ -91,6 +91,7 @@ var FriendsList = {
 		this.actInd.hide();
 		this.tableview.hide();
 		this.blankImage.hide();
+		this.search.blur();
 	},
 	clearFriendsList:function(){
 	
