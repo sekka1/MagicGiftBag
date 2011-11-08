@@ -131,6 +131,7 @@ var SearchResults = {
 			var rowPrice = Ti.UI.createLabel({
 				text:'Price: ' + results[i].price,
 				font:{fontSize:15},
+				color:'black',
 				left:Ti.Platform.displayCaps.platformWidth * 0.3,
 				top:5,
 				height:'auto',
@@ -141,6 +142,7 @@ var SearchResults = {
 			var rowTitle = Ti.UI.createLabel({
 				text:results[i].title,
 				font:{fontSize:15},
+				color:'black',
 				left:Ti.Platform.displayCaps.platformWidth * 0.3,
 				top:25,
 				height:'auto',

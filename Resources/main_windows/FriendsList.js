@@ -152,6 +152,8 @@ var FriendsList = {
 			// show a remote url in the left image.
 			var row = Ti.UI.createTableViewRow({
 				title:results.data[i].name,
+				font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},
+				color:'black',
 				hasChild:true,
 				opacity:1.0,
 			});

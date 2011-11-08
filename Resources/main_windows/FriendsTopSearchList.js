@@ -12,7 +12,7 @@ var FriendsTopSearchList = {
 	xhr:Titanium.Network.createHTTPClient(),
 	tableview:Titanium.UI.createTableView({
 				top:60,
-				opacity:0.4
+				opacity:1//0.4
 	}),
 	blankImage:Titanium.UI.createImageView({ // To cover the logout button
 				image:'../images/templates/multi-color/blank_white.png',
@@ -124,6 +124,8 @@ var FriendsTopSearchList = {
 			// Display each of the top categories
 			var row = Ti.UI.createTableViewRow({
 				title:results[i].name,
+				font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},
+				color:'black',
 				hasDetail:true
 			});
 						
