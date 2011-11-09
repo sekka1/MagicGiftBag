@@ -26,7 +26,7 @@ var Login = {
 	}),
 	// This is for the android.  For some reason the android on wont do the win.setBackground
 	backgroundImage:Titanium.UI.createImageView({
-				image:'../images/templates/multi-color/MGB-AppSplash.png',
+				image:'../images/templates/multi-color/MGB-DroidSplash.png',
 				width:Ti.Platform.displayCaps.platformWidth,
 				height:Ti.Platform.displayCaps.platformHeight,
 				canScale:false,
