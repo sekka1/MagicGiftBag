@@ -32,8 +32,17 @@ var FriendsTopSearchList = {
 	}),
 	main:function(){
 	
-		this.getData();
-		this.show();
+		if( Titanium.Facebook.loggedIn ){
+			// Still has a valid FB auth token
+		
+			this.getData();
+			this.show();
+		} else {
+			// FB auth token has expired
+			
+			FriendsList.hide();
+			Login.show();
+		}
 	},
 	show:function(){
 	
