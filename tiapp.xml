@@ -2,7 +2,7 @@
 <ti:app xmlns:ti="http://ti.appcelerator.org">
 <id>com.magicgiftbag.magicgiftbag</id>
 <name>MagicGiftBag</name>
-<version>2</version>
+<version>1</version>
 <publisher>gakan</publisher>
 <url>http://www.magicgiftbag.com</url>
 <description>No description provided</description>
