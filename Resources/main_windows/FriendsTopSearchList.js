@@ -119,20 +119,16 @@ var FriendsTopSearchList = {
 	
 		Ti.API.info( 'results length: ' + results.length );
 		
+		var tableData = [];
+		
 		for (var i=0;i<results.length;i++){
 
-			// Display each of the top categories
-			var row = Ti.UI.createTableViewRow({
-				title:results[i].name,
-				font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},
-				color:'black',
-				hasDetail:true
-			});
-						
-			row.name = results[i].name;
-	
-			this.tableview.appendRow( row );
+			// Loading the tableview this way is way faster than creating a rowview for each item
+			tableData.push( {title:results[i].name,name:results[i].name,font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black',hasDetail:true} );
+
 		}
+
+		this.tableview.data = tableData;
 			
 		/////////////////////////////////////////////////
 		// Event Listener for the row click

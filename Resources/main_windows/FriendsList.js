@@ -146,25 +146,15 @@ var FriendsList = {
 				
 		Ti.API.info( '# of fb friends: ' + results.data.length );
  
+ 		var tableData = [];
 
 		for (var i=0;i<results.data.length;i++){
 
-			// The left image doesn not work right now.  It is a titanium bug where it wont
-			// show a remote url in the left image.
-			var row = Ti.UI.createTableViewRow({
-				title:results.data[i].name,
-				font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},
-				color:'black',
-				hasChild:true,
-				opacity:1.0,
-			});
-						
-			row.id = results.data[i].id;
-			row.number = i;
-			row.btnBack = this.btnBack;
-
-			this.tableview.appendRow( row );
+			// Loading the tableview this way is way faster than creating a rowview for each item
+			tableData.push( {title:results.data[i].name,hasChild:true,color:"black",id:results.data[i].id,number:i,font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'}} );
 		}
+		
+		this.tableview.data = tableData;
 		
 		this.tableview.addEventListener('click', function(e){
 		
