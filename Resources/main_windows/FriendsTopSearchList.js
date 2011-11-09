@@ -127,6 +127,12 @@ var FriendsTopSearchList = {
 			tableData.push( {title:results[i].name,name:results[i].name,font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black',hasDetail:true} );
 
 		}
+		
+		// Put a default row to let the user there is no results
+		if( results.length == 0 ){
+			Ti.API.info( 'No results' );
+			tableData.push( {title:"Sorry we did not find any",name:'kindle',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black'}, {title:"recommendations for",name:'kindle',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black'}, {title:"this friend",name:'Kindle',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black'} );
+		}						    
 
 		this.tableview.data = tableData;
 			

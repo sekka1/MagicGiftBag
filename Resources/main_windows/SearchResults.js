@@ -155,6 +155,17 @@ var SearchResults = {
 			this.tableview.appendRow( row );
 		}
 		
+		// Put a default row to let the user there is no results
+		if( results.length == 0 ){
+			Ti.API.info( 'No results' );
+			
+			var tableData = [];
+			
+			tableData.push( {title:"Sorry we did not find any",item_url:'http://www.amazon.com/Kindle-Special-Offers-Wireless-Reader/dp/B004HFS6Z0%3FSubscriptionId%3DAKIAJO6OOIFG3LCMZPGA%26tag%3Dwedvite-20%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB004HFS6Z0',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black'}, {title:"recommendations for",item_url:'http://www.amazon.com/Kindle-Special-Offers-Wireless-Reader/dp/B004HFS6Z0%3FSubscriptionId%3DAKIAJO6OOIFG3LCMZPGA%26tag%3Dwedvite-20%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB004HFS6Z0',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black'}, {title:"this friend",item_url:'http://www.amazon.com/Kindle-Special-Offers-Wireless-Reader/dp/B004HFS6Z0%3FSubscriptionId%3DAKIAJO6OOIFG3LCMZPGA%26tag%3Dwedvite-20%26linkCode%3Dsp1%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB004HFS6Z0',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black'} );
+		
+			this.tableview.data = tableData;
+		}
+		
 		/////////////////////////////////////////////////
 		// Event Listener for the row click
 		/////////////////////////////////////////////////
