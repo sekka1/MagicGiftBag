@@ -156,7 +156,10 @@ var FriendsList = {
 		Ti.API.info( '# of fb friends: ' + results.data.length );
  
  		var tableData = [];
-
+ 		
+ 		// Add "Me" onto top of the list
+ 		tableData.push( {title:"Me",hasChild:true,color:"black",id:Titanium.Facebook.uid,number:0,font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'}} );
+ 		
 		for (var i=0;i<results.data.length;i++){
 
 			// Loading the tableview this way is way faster than creating a rowview for each item
