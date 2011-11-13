@@ -152,8 +152,28 @@ var FriendsList = {
 	fillRows:function( result ){
 
 		results = eval('('+result+')');
-				
+						
 		Ti.API.info( '# of fb friends: ' + results.data.length );
+ 
+ 		// Sorting the Facebook Friends List
+		var sort_by = function(field, reverse, primer){
+
+		   reverse = [1,-1][+!!reverse];
+		   primer  = primer || function(x){return x};
+		
+		   return function (a,b) {    
+		
+			   a = primer(a[field]);
+			   b = primer(b[field]);
+		
+			   return (reverse * 
+					  ((a < b) ? -1 :
+					   (a > b) ? +1 :
+								  0));
+		   }
+		}
+								
+		results.data.sort( sort_by('name', false, function(a){return a.toUpperCase()} ) );
  
  		var tableData = [];
  		
