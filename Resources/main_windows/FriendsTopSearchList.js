@@ -115,8 +115,9 @@ var FriendsTopSearchList = {
 		};
 		
 		// Sending accessToken to the web server to get this user's facebook info to recommend something
-		this.xhr.open('GET', win.site_url + 'data/index/class/GiftEngine/method/getTopCategoryListMobile/userID/'+this.fbID+'/accessToken/'+this.accessToken, true);
-		
+		//this.xhr.open('GET', win.site_url + 'data/index/class/GiftEngine/method/getTopCategoryListMobile/userID/'+this.fbID+'/accessToken/'+this.accessToken, true);
+		this.xhr.open('GET', win.site_url + 'data/index/class/GiftEngine/method/getInterestsData/userID/'+this.fbID+'/accessToken/'+this.accessToken, true);
+
 		this.xhr.send();	
 	},
 	fillRows:function( responseText ){
@@ -124,17 +125,44 @@ var FriendsTopSearchList = {
 		Ti.API.info( 'in fillRows: ' );
 
 		//Ti.API.info( 'this.topSearchList: ' + responseText );
-		results = JSON.parse( responseText );
+		var results = JSON.parse( responseText );
 	
-		Ti.API.info( 'results length: ' + results.length );
+		var interests = results[0].interests;
+		var personaType = results[1].persona;
+	
+		//Ti.API.info( 'results length: ' + results.length );
+		//Ti.API.info( 'interest length: ' + results[0].interests.length );
+		//Ti.API.info( 'interest[0] name: ' + interests[0].name );
 		
+		//Ti.API.info( 'personaType value: ' + personaType[0].name );
+		//Ti.API.info( 'personaType value: ' + personaType[0].value );
+				
 		var tableData = [];
 		
-		for (var i=0;i<results.length;i++){
+		var includeHearder = true;  // Put header into the table view for Persona and Interest
+		
+		for( var n=0; n<personaType.length; n++ ){
+			
+			if( includeHearder )
+				tableData.push( {title:personaType[n].name,name:personaType[n].name,productType:'persona',header:'Persona',backgroundColor:'white',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black',hasDetail:true} );
+			else
+				tableData.push( {title:personaType[n].name,name:personaType[n].name,productType:'persona',backgroundColor:'white',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black',hasDetail:true} );
+		
+			includeHearder = false;
+		}
+
+		includeHearder = true;
+
+		for (var i=0;i<interests.length;i++){
 
 			// Loading the tableview this way is way faster than creating a rowview for each item
-			tableData.push( {title:results[i].name,name:results[i].name,font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black',hasDetail:true} );
-
+			
+			if( includeHearder )
+				tableData.push( {title:interests[i].name,name:interests[i].name,productType:'interest',header:'Interest',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black',hasDetail:true} );
+			else
+				tableData.push( {title:interests[i].name,name:interests[i].name,productType:'interest',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black',hasDetail:true} );
+			
+			includeHearder = false;
 		}
 		
 		// Put a default row to let the user there is no results
@@ -159,6 +187,7 @@ var FriendsTopSearchList = {
 				FriendsTopSearchList.hide();
 				
 				SearchResults.queryItem = e.row.name;
+				SearchResults.productType = e.row.productType;
 				SearchResults.main();		
 			}
 		});

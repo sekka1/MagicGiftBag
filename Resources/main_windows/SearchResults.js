@@ -6,7 +6,8 @@ var SearchResults = {
 	testCount:0,
 	testDidShow:false,
 	isAddedToWin:false,	
-	queryItem: '',
+	queryItem: '', // String to query for a product search
+	productType: '', // What type is this; Interest or Persona Type
 	xhr:Titanium.Network.createHTTPClient(),
 	tableview: Titanium.UI.createTableView({
 			top:60
@@ -95,9 +96,17 @@ var SearchResults = {
 		/////////////////////////////////////////////////
 		var queryItem_url_safe = this.queryItem.replace( / /g, "%20" );
 		
-		Ti.API.info( win.site_url + "data/index/class/ProductSearch/method/searchMobile/numberOfItems/24/searchIndex/1/priceRange/%5B0,999999%5D/q/" + queryItem_url_safe );
+		var url = '';
 		
-		this.xhr.open('GET', win.site_url + "data/index/class/ProductSearch/method/searchMobile/numberOfItems/24/searchIndex/1/priceRange/%5B0,999999%5D/q/" + queryItem_url_safe,true);
+		// Amazon search URL
+		if( this.productType == 'interest' )
+			url = win.site_url + "data/index/class/ProductSearch/method/searchMobile/numberOfItems/24/searchIndex/1/priceRange/%5B0,999999%5D/q/" + queryItem_url_safe;
+		if( this.productType == 'persona' )
+			url = win.site_url + 'data/index/class/PersonaProducts/method/search/persona/' + this.queryItem;
+		
+		Ti.API.info( url );
+		
+		this.xhr.open('GET', url, true);
 		
 		this.xhr.send();	
 	},
