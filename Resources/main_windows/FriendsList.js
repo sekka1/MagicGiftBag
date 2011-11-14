@@ -92,6 +92,10 @@ var FriendsList = {
 		
 		if( ! FriendsList.didSetFriendsList )
 			this.actInd.show();
+			
+		// Reset the Friends top interest data to nothing.
+		FriendsTopSearchList.didGetInterestData = false;		
+		FriendsTopSearchList.interestData = '';
 	},
 	hide:function(){
 	

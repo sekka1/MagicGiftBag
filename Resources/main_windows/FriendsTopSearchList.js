@@ -9,6 +9,8 @@ var FriendsTopSearchList = {
 	isAddedToWin:false,	
 	fbID: '',
 	accessToken: '',
+	interestData:'',
+	didGetInterestData:false,
 	xhr:Titanium.Network.createHTTPClient(),
 	tableview:Titanium.UI.createTableView({
 				top:60,
@@ -56,7 +58,7 @@ var FriendsTopSearchList = {
 		win.setBackgroundImage('../images/templates/multi-color/MGB-AppBGWatermark.png');
 
 		// Set Navigation Items
-		NavigationBar.titleName.text = 'Interests';
+		NavigationBar.titleName.text = '  Find Gifts';
 		NavigationBar.btnBack.action = 'FriendsTopSearchList';
 
 		if( this.isAddedToWin ){
@@ -88,7 +90,8 @@ var FriendsTopSearchList = {
 			win.add( this.actInd );
 		}
 		
-		this.actInd.show();
+		if( ! this.didGetInterestData )
+			this.actInd.show();
 	},
 	hide:function(){
 
@@ -102,23 +105,34 @@ var FriendsTopSearchList = {
 	
 		Ti.API.info( 'getData' );
 		
-		///////////////////////////////////////////////
-		// Query the Gift Engine for Top Interest
-		///////////////////////////////////////////////
+		if( ! this.didGetInterestData ){
 		
-		this.xhr.onload = function(e) {
-			Ti.API.info( 'in onload: ' );
-						
-			FriendsTopSearchList.fillRows( this.responseText );
+			///////////////////////////////////////////////
+			// Query the Gift Engine for Top Interest
+			///////////////////////////////////////////////
 			
-			FriendsTopSearchList.actInd.hide();
-		};
-		
-		// Sending accessToken to the web server to get this user's facebook info to recommend something
-		//this.xhr.open('GET', win.site_url + 'data/index/class/GiftEngine/method/getTopCategoryListMobile/userID/'+this.fbID+'/accessToken/'+this.accessToken, true);
-		this.xhr.open('GET', win.site_url + 'data/index/class/GiftEngine/method/getInterestsData/userID/'+this.fbID+'/accessToken/'+this.accessToken, true);
-
-		this.xhr.send();	
+			this.xhr.onload = function(e) {
+				Ti.API.info( 'in onload: ' );
+				
+				FriendsTopSearchList.didGetInterestData = true;
+				
+				FriendsTopSearchList.interestData = this.responseText;
+							
+				FriendsTopSearchList.fillRows( this.responseText );
+				
+				FriendsTopSearchList.actInd.hide();
+			};
+			
+			// Sending accessToken to the web server to get this user's facebook info to recommend something
+			//this.xhr.open('GET', win.site_url + 'data/index/class/GiftEngine/method/getTopCategoryListMobile/userID/'+this.fbID+'/accessToken/'+this.accessToken, true);
+			this.xhr.open('GET', win.site_url + 'data/index/class/GiftEngine/method/getInterestsData/userID/'+this.fbID+'/accessToken/'+this.accessToken, true);
+	
+			this.xhr.send();	
+		} else {
+			// Already have the data and just use that
+			
+			this.fillRows( this.interestData );
+		}
 	},
 	fillRows:function( responseText ){
 	
@@ -144,7 +158,7 @@ var FriendsTopSearchList = {
 		for( var n=0; n<personaType.length; n++ ){
 			
 			if( includeHearder )
-				tableData.push( {title:personaType[n].name,name:personaType[n].name,productType:'persona',header:'Persona',backgroundColor:'white',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black',hasDetail:true} );
+				tableData.push( {title:personaType[n].name,name:personaType[n].name,productType:'persona',header:'By Personality',backgroundColor:'white',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black',hasDetail:true} );
 			else
 				tableData.push( {title:personaType[n].name,name:personaType[n].name,productType:'persona',backgroundColor:'white',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black',hasDetail:true} );
 		
@@ -158,7 +172,7 @@ var FriendsTopSearchList = {
 			// Loading the tableview this way is way faster than creating a rowview for each item
 			
 			if( includeHearder )
-				tableData.push( {title:interests[i].name,name:interests[i].name,productType:'interest',header:'Interest',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black',hasDetail:true} );
+				tableData.push( {title:interests[i].name,name:interests[i].name,productType:'interest',header:'By Interest',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black',hasDetail:true} );
 			else
 				tableData.push( {title:interests[i].name,name:interests[i].name,productType:'interest',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black',hasDetail:true} );
 			
