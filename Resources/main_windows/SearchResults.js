@@ -112,7 +112,7 @@ var SearchResults = {
 	},
 	fillRows:function( responseText ){
 
-		//Ti.API.info( responseText );
+		Ti.API.info( responseText );
 	
 		results = JSON.parse( responseText );
 	

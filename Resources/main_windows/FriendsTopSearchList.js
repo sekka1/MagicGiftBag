@@ -182,7 +182,7 @@ var FriendsTopSearchList = {
 		// Put a default row to let the user there is no results
 		if( personaType.length == 0 && interests.length == 0 ){
 			Ti.API.info( 'No results' );
-			tableData.push( {title:"Sorry we did not find any",name:'kindle',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black'}, {title:"recommendations for",name:'kindle',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black'}, {title:"this friend",name:'Kindle',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black'} );
+			tableData.push( {title:"Sorry we did not find any",name:'kindle',productType:'interest',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black'}, {title:"recommendations for",name:'Canon PowerShot ELPH 300',productType:'interest',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black'}, {title:"this friend",name:'Kindle fire',productType:'interest',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black'} );
 		}						    
 
 		this.tableview.data = tableData;
