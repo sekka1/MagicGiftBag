@@ -180,7 +180,7 @@ var FriendsTopSearchList = {
 		}
 		
 		// Put a default row to let the user there is no results
-		if( results.length == 0 ){
+		if( personaType.length == 0 && interests.length == 0 ){
 			Ti.API.info( 'No results' );
 			tableData.push( {title:"Sorry we did not find any",name:'kindle',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black'}, {title:"recommendations for",name:'kindle',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black'}, {title:"this friend",name:'Kindle',font:{fontFamily:'Helvetica Neue',fontSize:30,fontWeight:'bold'},color:'black'} );
 		}						    
