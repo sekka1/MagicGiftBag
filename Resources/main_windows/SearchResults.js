@@ -118,7 +118,7 @@ var SearchResults = {
 	
 		Ti.API.info( 'Length: ' + results.length );
 		
-		for (var i=1;i<results.length;i++){
+		for (var i=0;i<results.length;i++){
 
 			// Display each of the top categories
 			var row = Ti.UI.createTableViewRow({
@@ -160,7 +160,7 @@ var SearchResults = {
 			row.add(rowTitle);
 			
 			row.item_url = results[i].item_url;
-	
+Ti.API.info( 'adding row ' + i );	
 			this.tableview.appendRow( row );
 		}
 		
