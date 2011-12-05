@@ -102,7 +102,7 @@ var SearchResults = {
 		if( this.productType == 'interest' )
 			url = win.site_url + "data/index/class/ProductSearch/method/searchMobile/numberOfItems/24/searchIndex/1/priceRange/%5B0,999999%5D/q/" + queryItem_url_safe;
 		if( this.productType == 'persona' )
-			url = win.site_url + 'data/index/class/PersonaProducts/method/search/persona/' + this.queryItem;
+			url = win.site_url + 'data/index/class/PersonaProducts/method/search/persona/' + queryItem_url_safe;
 		
 		Ti.API.info( url );
 		
@@ -160,7 +160,7 @@ var SearchResults = {
 			row.add(rowTitle);
 			
 			row.item_url = results[i].item_url;
-Ti.API.info( 'adding row ' + i );	
+	
 			this.tableview.appendRow( row );
 		}
 		

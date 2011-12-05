@@ -33,7 +33,7 @@ var ProductWebView = {
 	show:function(){
 		
 		// Set Navigation Title
-		NavigationBar.titleName.text = 'Item';
+		NavigationBar.titleName.text = '      Place Order';
 		NavigationBar.btnBack.action = 'ProductWebView';
 	
 		if( this.isAddedToWin ){

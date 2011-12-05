@@ -52,7 +52,8 @@ var Login = {
 				this.backgroundImage.show();
 
 			// Add the Facebook Login/Logout button to the page		
-			win.add( this.facebookLogInButton );
+			//win.add( this.facebookLogInButton );
+			this.facebookLogInButton.show();
 	
 			if( Titanium.Facebook.loggedIn )
 				this.btnFriendsList.show();
@@ -65,7 +66,9 @@ var Login = {
 			if( Titanium.Platform.name == 'android' )
 				win.add( this.backgroundImage );
 		
-			win.add(Titanium.Facebook.createLoginButton({ bottom:2, 'style': 'wide' }));
+				// Add the Facebook Login/Logout button to the page
+				//win.add(Titanium.Facebook.createLoginButton({ bottom:2, 'style': 'wide' }));
+				win.add( this.facebookLogInButton );
 	
 			if( Titanium.Facebook.loggedIn ){
 			
