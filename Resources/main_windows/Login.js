@@ -44,7 +44,7 @@ var Login = {
 	
 		win.setBackgroundImage('../images/templates/multi-color/MGB-AppSplash.png');
 		//Ti.UI.currentWindow.setBackgroundImage('../images/templates/multi-color/MGB-AppSplash.png');
-	
+
 		if( this.isAddedToWin ){
 			// This objects element has already been added to the window.  You can just show it
 
@@ -53,8 +53,23 @@ var Login = {
 
 			// Add the Facebook Login/Logout button to the page		
 			//win.add( this.facebookLogInButton );
-			this.facebookLogInButton.show();
-	
+			if( ! Titanium.Facebook.loggedIn ){
+				// User's FB session has expired add the login button again
+				
+				//win.add( this.facebookLogInButton );
+				//this.facebookLogInButton.show();
+				
+				Titanium.Facebook.authorize();
+				
+				//alert( 'in user is not logged in' );
+			} else {
+				// User's FB session is still active.  Just how the logout button
+				
+				//win.add(this.btnFriendsList);
+				//this.facebookLogInButton.show();
+				
+				//alert( 'in user is logged in' );
+			}
 			if( Titanium.Facebook.loggedIn )
 				this.btnFriendsList.show();
 			
@@ -79,7 +94,7 @@ var Login = {
 	hide:function(){
 
 		// Remove Facebook login button	
-		this.facebookLogInButton.hide();
+		//this.facebookLogInButton.hide();
 
 		if( Titanium.Facebook.loggedIn ){
 		

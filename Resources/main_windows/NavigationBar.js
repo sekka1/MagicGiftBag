@@ -6,16 +6,16 @@ var NavigationBar = {
 	isAddedToWin:false,
 	backButtonAction:'',
 	nav_bar:Titanium.UI.createImageView({
-        image:'../images/templates/multi-color/nav-bar-blank.png',
+        image:'',
         top:0,
         left:0,
-        height:60,
-        //width:480,
+        height:'60',
+        //width:PlatformParameters.navBarHeight,
 	    borderWidth: 0,
 	    borderRadius: 0
 	}),
 	btnBack:Titanium.UI.createButton({  
-		title:'',  
+		title:'',
 		backgroundImage:'../images/templates/multi-color/back.png',
 		backgroundSelectedImage: '../images/templates/multi-color/back_over.png',
 		top:10,  
@@ -43,7 +43,9 @@ var NavigationBar = {
 	
 		if( this.isAddedToWin ){
 			// This objects element has already been added to the window.  You can just show it
-		
+			
+			this.nav_bar.image = PlatformParameters.navBarImage;
+
 			this.nav_bar.show();
 			this.btnBack.show();
 			this.titleName.show();

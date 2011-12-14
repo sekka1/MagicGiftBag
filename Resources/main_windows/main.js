@@ -8,6 +8,7 @@ win.orientationModes = [Titanium.UI.PORTRAIT];
 /////////////////////////////////////////////////
 // Include All the various pages files
 /////////////////////////////////////////////////
+Ti.include('PlatformParameters.js');
 Ti.include('NavigationBar.js');
 Ti.include('Login.js');
 Ti.include('FriendsList.js');
@@ -19,6 +20,9 @@ Ti.include('ProductWebView.js');
 /////////////////////////////////////////////////
 // Display
 /////////////////////////////////////////////////
+
+// Set platform specific parameters
+PlatformParameters.selectPlatform();
 
 // Setup Navigation Bar
 NavigationBar.main();
@@ -34,3 +38,4 @@ var screenH = Ti.Platform.displayCaps.platformHeight;
  
 Ti.API.info('Width ' + screenW + ' Height ' + screenH);
 Ti.API.info( 'Platform: ' + Titanium.Platform.name );
+Ti.API.info( 'Navbar: ' + PlatformParameters.navBarImage );
