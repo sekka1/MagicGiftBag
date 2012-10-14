@@ -32,6 +32,14 @@ var Login = {
 				canScale:false,
 				top:0
 	}),
+	algorithmsIOLogo:Titanium.UI.createImageView({
+				image:'../images/poweredByAlgorithmsIO.png',
+				width:120,
+				height:42,
+				canScale:false,
+				top:0,
+				left:0
+	}),
 	facebookLogInButton:Titanium.Facebook.createLoginButton({ bottom:2, 'style': 'wide' }),
 	main:function(){
 	
@@ -50,7 +58,8 @@ var Login = {
 
 			if( Titanium.Platform.name == 'android' )
 				this.backgroundImage.show();
-
+				this.algorithmsIOLogo.show();
+				
 			// Add the Facebook Login/Logout button to the page		
 			//win.add( this.facebookLogInButton );
 			if( ! Titanium.Facebook.loggedIn ){
@@ -84,6 +93,8 @@ var Login = {
 				// Add the Facebook Login/Logout button to the page
 				//win.add(Titanium.Facebook.createLoginButton({ bottom:2, 'style': 'wide' }));
 				win.add( this.facebookLogInButton );
+				
+				win.add( this.algorithmsIOLogo);
 	
 			if( Titanium.Facebook.loggedIn ){
 			
@@ -103,6 +114,7 @@ var Login = {
 		}
 		
 		this.backgroundImage.hide();
+		this.algorithmsIOLogo.hide();
 	},
 	setFacebookOptions:function(){
 		

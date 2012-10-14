@@ -117,7 +117,7 @@ var FriendsTopSearchList = {
 			
 			this.xhr.onload = function(e) {
 				
-				Ti.API.info( 'in onload: ' + this.responseText );
+				//Ti.API.info( 'in onload: ' + this.responseText );
 				
 				if(FriendsTopSearchList.algorithmsFirstStep){
 					// This is the first step.  Getting the user's FB likes
