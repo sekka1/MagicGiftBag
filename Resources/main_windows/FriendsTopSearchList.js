@@ -11,7 +11,7 @@ var FriendsTopSearchList = {
 	accessToken:'',
 	interestData:'',
 	algorithmsIOURL:'https://v1.api.algorithms.io/jobs',
-	algorithmsAuthToken:'c1a77f12caa5b03ee5654838f1741be0',
+	algorithmsAuthToken:'4cba2cea8d895bd0b85c2328ba286231',
 	algorithmsFirstStep:true,
 	didGetInterestData:false,
 	xhr:Titanium.Network.createHTTPClient(),
