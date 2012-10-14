@@ -8,8 +8,11 @@ var FriendsTopSearchList = {
 	testDidShow:false,
 	isAddedToWin:false,	
 	fbID: '',
-	accessToken: '',
+	accessToken:'',
 	interestData:'',
+	algorithmsIOURL:'https://v1.api.algorithms.io/jobs',
+	algorithmsAuthToken:'c1a77f12caa5b03ee5654838f1741be0',
+	algorithmsFirstStep:true,
 	didGetInterestData:false,
 	xhr:Titanium.Network.createHTTPClient(),
 	tableview:Titanium.UI.createTableView({
@@ -111,23 +114,55 @@ var FriendsTopSearchList = {
 			// Query the Gift Engine for Top Interest
 			///////////////////////////////////////////////
 			
-			this.xhr.onload = function(e) {
-				Ti.API.info( 'in onload: ' );
-				
-				FriendsTopSearchList.didGetInterestData = true;
-				
-				FriendsTopSearchList.interestData = this.responseText;
-							
-				FriendsTopSearchList.fillRows( this.responseText );
-				
-				FriendsTopSearchList.actInd.hide();
-			};
 			
-			// Sending accessToken to the web server to get this user's facebook info to recommend something
-			//this.xhr.open('GET', win.site_url + 'data/index/class/GiftEngine/method/getTopCategoryListMobile/userID/'+this.fbID+'/accessToken/'+this.accessToken, true);
-			this.xhr.open('GET', win.site_url + 'data/index/class/GiftEngine/method/getInterestsData/userID/'+this.fbID+'/accessToken/'+this.accessToken, true);
-	
-			this.xhr.send();	
+			this.xhr.onload = function(e) {
+				
+				Ti.API.info( 'in onload: ' + this.responseText );
+				
+				if(FriendsTopSearchList.algorithmsFirstStep){
+					// This is the first step.  Getting the user's FB likes
+					
+					//Ti.API.info( 'in onload 1: ' + this.responseText );
+					
+					FriendsTopSearchList.algorithmsFirstStep = false;
+					
+					var resultsFB = JSON.parse( this.responseText );
+										
+					var params = {
+	            		job_params:'{"job":{"algorithm":{"id":"28","params":{"graphPath":"/1221835242/likes","method":"GET","params":[]}},"outputType":"json","method":"sync","datasources":['+resultsFB.final.output.datasource_id_seq+']}}'
+	    			};
+	    		
+	    			FriendsTopSearchList.xhr.open('POST', FriendsTopSearchList.algorithmsIOURL, true);
+	    			
+	    			FriendsTopSearchList.xhr.setRequestHeader('authToken',FriendsTopSearchList.algorithmsAuthToken);
+					FriendsTopSearchList.xhr.send(params);
+				}else{
+					// This is the second step. Getting the user's top interest results
+					
+					//Ti.API.info( 'in onload 2: ' + this.responseText );
+										
+					FriendsTopSearchList.didGetInterestData = true;
+					
+					FriendsTopSearchList.interestData = this.responseText;
+								
+					FriendsTopSearchList.fillRows( this.responseText );
+					
+					FriendsTopSearchList.actInd.hide();
+					
+					FriendsTopSearchList.algorithmsFirstStep = true;
+				}
+			
+			};
+												
+			// Make call to Algorithms.io to get this user's FB likes
+			var params = {
+            	job_params:'{"job":{"algorithm":{"id":"32","params":{"accessToken":"'+this.accessToken+'","graphPath":"/'+this.fbID+'/likes","method":"GET","params":[]}},"outputType":"json","method":"async","datasources":[1111]}}'
+    		};
+			
+			this.xhr.open('POST', FriendsTopSearchList.algorithmsIOURL, true);
+
+			this.xhr.setRequestHeader('authToken',this.algorithmsAuthToken);
+			this.xhr.send(params);	
 		} else {
 			// Already have the data and just use that
 			
@@ -141,16 +176,17 @@ var FriendsTopSearchList = {
 		//Ti.API.info( 'this.topSearchList: ' + responseText );
 		var results = JSON.parse( responseText );
 	
-		var interests = results[0].interests;
-		var personaType = results[1].persona;
+		var interests = results.interests;
+		var personaType = []; //results[1].persona;
 	
 		//Ti.API.info( 'results length: ' + results.length );
-		//Ti.API.info( 'interest length: ' + results[0].interests.length );
+		Ti.API.info( 'interest length: ' + interests.length );
 		//Ti.API.info( 'interest[0] name: ' + interests[0].name );
 		
 		//Ti.API.info( 'personaType value: ' + personaType[0].name );
 		//Ti.API.info( 'personaType value: ' + personaType[0].value );
-				
+		
+		
 		var tableData = [];
 		
 		var includeHearder = true;  // Put header into the table view for Persona and Interest
@@ -164,7 +200,7 @@ var FriendsTopSearchList = {
 		
 			includeHearder = false;
 		}
-
+		
 		includeHearder = true;
 
 		for (var i=0;i<interests.length;i++){
